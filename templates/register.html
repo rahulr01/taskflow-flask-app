@@ -1,35 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container d-flex justify-content-center align-items-center vh-100">
-      <div class="card p-4 shadow" style="width: 350px;">
+{% extends "layout.html" %}
 
+{% block title %}Register - TaskFlow{% endblock %}
 
-    <h2 class="text-center mb-3">Register</h2>
-<form method="post">
+{% block content %}
+<div class="flex flex-col justify-center items-center py-12">
+    <div class="w-full max-w-lg">
+        <div class="bg-white rounded-3xl shadow-xl shadow-slate-200 border border-slate-100 p-8 sm:p-10">
+            <div class="mb-8 text-center">
+                <h2 class="text-3xl font-black text-slate-900">Create Account</h2>
+                <p class="text-slate-500 mt-2">Join TaskFlow and stay organized</p>
+            </div>
 
-    <div class="mb-3">
-    <input type="text" name="username" placeholder="Enter username" class="form-control" required><br><br>
-    </div>
+            <form method="post" class="space-y-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Full Name</label>
+                        <input type="text" name="name" placeholder="John Doe"
+                            class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 transition-all"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Username</label>
+                        <input type="text" name="username" placeholder="johndoe123"
+                            class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 transition-all"
+                            required>
+                    </div>
+                </div>
 
-    <div class="mb-3">
-        <input type="password" name="password" placeholder="Enter password" class="form-control" required><br><br>
-    </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
+                    <input type="email" name="email" placeholder="john@example.com"
+                        class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 transition-all"
+                        required>
+                </div>
 
-    <button type="submit" class="btn btn-success w-100">Register</button>
-</form>
-          <div class="text-center mt-2">
-                 <a href="/"> Back to Home  </a>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Phone Number</label>
+                    <input type="tel" name="phone" placeholder="+1 234 567 890"
+                        class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 transition-all">
+                </div>
 
-          </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Password</label>
+                    <input type="password" name="password" placeholder="••••••••"
+                        class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 transition-all"
+                        required>
+                </div>
 
-      </div>
+                <button type="submit"
+                    class="w-full py-4 bg-indigo-600 text-white font-black rounded-xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 active:scale-95">
+                    Register Now
+                </button>
+                </form>
+
+            <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+                <p class="text-slate-600">Already have an account?
+                    <a href="/login" class="text-indigo-600 font-black hover:underline">Sign In</a>
+                </p>
+            </div>
+        </div>
+        </div>
 </div>
-
-</body>
-</html>
+{% endblock %}

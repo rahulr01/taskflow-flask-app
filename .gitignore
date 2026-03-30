@@ -2,3 +2,6 @@
 __pycache__/
 *.pyc
 .env
+.idea
+database.db
+static/uploads/

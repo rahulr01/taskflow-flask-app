@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TaskFlow{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+
+        body {
+            font-family: 'Bricolage Grotesque', sans-serif;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 min-h-screen flex flex-col">
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="text-2xl font-black text-indigo-600 flex items-center gap-2 group">
+                        <i class="fas fa-tasks transition-transform group-hover:rotate-12"></i>
+                        <span class="tracking-tight">TaskFlow</span>
+                    </a>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="/about"
+                        class="text-slate-500 hover:text-indigo-600 transition-colors font-semibold text-sm">About</a>
+                    {% if session.get('username') %}
+                    <div class="h-6 w-px bg-slate-200 mx-2"></div>
+                    <div class="flex items-center gap-4">
+                        <a href="/profile" class="flex items-center gap-3 group">
+                            <div class="text-right hidden sm:block">
+                                <p
+                                    class="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-tight">
+                                    {{ session['username'] }}</p>
+                                <p class="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Edit Profile
+                                </p>
+                            </div>
+                            <img src="{{ url_for('static', filename='uploads/' + session['profile_pic']) if session.get('profile_pic') and session['profile_pic'] != 'default.png' else 'https://ui-avatars.com/api/?name=' + session['username'] + '&background=random' }}"
+                                alt="Profile"
+                                class="w-10 h-10 rounded-xl object-cover border-2 border-slate-100 group-hover:border-indigo-500 transition-all shadow-sm">
+                        </a>
+                        <a href="/logout"
+                            class="bg-rose-50 text-rose-600 hover:bg-rose-100 px-4 py-2 rounded-xl text-sm font-bold transition-all">Logout</a>
+                    </div>
+                    {% else %}
+                    <a href="/login" class="text-slate-600 hover:text-indigo-600 font-bold text-sm">Login</a>
+                    <a href="/register"
+                        class="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl text-sm font-bold transition-all shadow-lg shadow-indigo-200 active:scale-95">Get
+                        Started</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 w-full mt-6 space-y-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div
+            class="fade-in p-4 rounded-2xl flex items-center justify-between shadow-sm border {% if category == 'error' %}bg-rose-50 text-rose-700 border-rose-100{% else %}bg-emerald-50 text-emerald-700 border-emerald-100{% endif %}">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-full flex items-center justify-center {% if category == 'error' %}bg-rose-100{% else %}bg-emerald-100{% endif %}">
+                    <i
+                        class="fas {% if category == 'error' %}fa-exclamation-triangle{% else %}fa-check-circle{% endif %}"></i>
+                </div>
+                <span class="font-bold text-sm">{{ message }}</span>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <main class="flex-grow fade-in">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-10 mt-12">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-slate-400 text-sm font-medium">
+                &copy; 2026 TaskFlow. Elevating your productivity.
+            </div>
+            <div class="flex gap-6 text-slate-400 text-lg">
+                <a href="#" class="hover:text-indigo-600 transition-colors"><i class="fab fa-github"></i></a>
+                <a href="#" class="hover:text-indigo-600 transition-colors"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
