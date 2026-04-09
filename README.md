@@ -11,7 +11,7 @@ A full-stack web application built using Flask and MySQL.
 ## Tech Stack
 - Python (Flask)
 - MySQL
-- HTML/CSS (Bootstrap)
+- HTML/CSS (Tailwind UU)
 
 ## How to Run
 1. Install dependencies
