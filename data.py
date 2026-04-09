@@ -56,14 +56,13 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        query = "SELECT * FROM users WHERE username=%s AND password=%s"
-        values = (username, password)
+        query = "SELECT * FROM users WHERE username=%s"
 
-        cursor.execute(query,values)
+        cursor.execute(query,(username,))
         user = cursor.fetchone()
 
-        if user:
-            session['username'] = username
+        if user and check_password_hash(user[2], password):
+            session['username'] = user[1]
             return redirect('/dashboard')
         else:
             return "Invalid Credentials ❌"
@@ -85,8 +84,9 @@ def dashboard():
 def add_task():
     if 'username' in session:
         task = request.form['task']
-        query = "INSERT INTO tasks (task) VALUES (%s)"
-        cursor.execute(query,(task,))
+        priority = request.form.get('priority', 'Medium')
+        query = "INSERT INTO tasks (task, priority) VALUES (%s, %s)"
+        cursor.execute(query,(task,priority))
         db.commit()
 
         return redirect('/dashboard')
@@ -105,6 +105,13 @@ def delete(id):
     else:
         return redirect('/login')
 
+
+#Toggle Route
+@app.route('/toggle/<int:id>')
+def toggle(id):
+    cursor.execute("UPDATE tasks SET status = NOT status WHERE id = %s",(id,))
+    db.commit()
+    return redirect('/dashboard')
 # Logout
 @app.route('/logout')
 def logout():
